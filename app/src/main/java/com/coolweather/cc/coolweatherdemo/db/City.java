@@ -8,9 +8,13 @@ import org.litepal.crud.DataSupport;
  */
 
 public class City extends DataSupport {
+    //自增长id
     private int id;
+    //城市名称
     private String cityName;
+    //城市编号
     private int cityCode;
+    //所属省份
     private int provinceId;
 
     public int getId() {

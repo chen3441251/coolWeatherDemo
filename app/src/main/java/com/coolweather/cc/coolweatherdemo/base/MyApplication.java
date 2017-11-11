@@ -1,4 +1,4 @@
-package com.coolweather.cc.coolweatherdemo;
+package com.coolweather.cc.coolweatherdemo.base;
 
 import android.app.Application;
 
@@ -12,6 +12,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化litepal
         LitePal.initialize(this);
     }
 
