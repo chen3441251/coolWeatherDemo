@@ -3,6 +3,7 @@
     package="com.coolweather.cc.coolweatherdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".base.MyApplication"
         android:allowBackup="true"
@@ -18,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.WeatherActivity"></activity>
     </application>
 
 </manifest>
