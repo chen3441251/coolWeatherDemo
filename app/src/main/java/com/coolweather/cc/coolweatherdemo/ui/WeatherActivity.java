@@ -1,5 +1,6 @@
 package com.coolweather.cc.coolweatherdemo.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.coolweather.cc.coolweatherdemo.R;
 import com.coolweather.cc.coolweatherdemo.gson.WeatherBean;
+import com.coolweather.cc.coolweatherdemo.service.AutoUpdataService;
 import com.coolweather.cc.coolweatherdemo.utils.HttpUtil;
 import com.coolweather.cc.coolweatherdemo.utils.Utility;
 
@@ -188,6 +190,9 @@ public class WeatherActivity extends AppCompatActivity {
         mTvWeatherinfo.setText(weatherBean.getNow().getCond().getTxt());
         //未来几天天气
         List<WeatherBean.HeWeatherBean.DailyForecastBean> dailyForecast = weatherBean.getDaily_forecast();
+        if (mLlForecastLayout.getChildCount()>0) {
+            mLlForecastLayout.removeAllViews();
+        }
         for (WeatherBean.HeWeatherBean.DailyForecastBean dailyForecastBean : dailyForecast) {
             View inflate = LayoutInflater.from(this).inflate(R.layout.forecast_item_layout, mLlForecastLayout, false);
             TextView tv_date = (TextView) inflate.findViewById(R.id.tv_date);
@@ -210,5 +215,12 @@ public class WeatherActivity extends AppCompatActivity {
         mTvComf.setText("舒适度：" + weatherBean.getSuggestion().getComf().getTxt());
         mTvWash.setText("洗车指数：" + weatherBean.getSuggestion().getCw().getTxt());
         mTvSport.setText("运动建议：" + weatherBean.getSuggestion().getSport().getTxt());
+        //设置定时任务
+        if (weatherBean != null&&"ok".equals(weatherBean.getStatus())) {
+            Intent intent = new Intent(this, AutoUpdataService.class);
+            startService(intent);
+        }else {
+            Toast.makeText(this,"更新数据失败",Toast.LENGTH_SHORT).show();
+        }
     }
 }
